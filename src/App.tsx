@@ -76,8 +76,7 @@ function GameScreen({ navigation, route} : any){
     }
   };
 
-  // Checks all 8 possible winning lines: 3 rows, 3 columns, 2 diagonals
-  // winner stays 0 while the game is still in progress or drawn
+   // Checks all 8 possible winning lines: 3 rows, 3 columns, 2 diagonals
   let winner: number = 0;
   if (block1 > 0 && block1 === block2 && block2 === block3) winner = block1;
   if (block4 > 0 && block4 === block5 && block5 === block6) winner = block4;
@@ -88,21 +87,47 @@ function GameScreen({ navigation, route} : any){
   if (block1 > 0 && block1 === block5 && block5 === block9) winner = block1;
   if (block3 > 0 && block3 === block5 && block5 === block7) winner = block3;
 
-  // handlePress is shared by all nine tiles.
-  // block: the tile's current value (0, 1, or 2)
-  // setBlock: the specific setter for that tile (setBlock1 ... setBlock9)
-  // Passing the setter in as a parameter is what allows one function
-  // to update any of the nine tiles, instead of needing nine functions.
-  const handlePress = (block: number, setBlock: (value: number) => void) => {
+  const handlePress = (index: number) => {
     if (winner !== 0) return; // stop game after winner is chosen
 
     // how do we stop the user from pressing the same button twice? 
-    if (block !== 0) {
-      return; // tile already played
+
+    // still need to refactor the below statements
+    if (index === 0) {
+      player1Turn ? setBlock1(1) : setBlock1(2);
     }
 
-    // set the block based on who played it
-    player1Turn ? setBlock(1) : setBlock(2);
+    if (index === 1) {
+      player1Turn ? setBlock2(1) : setBlock2(2);
+    }
+
+    if (index === 2) {
+      player1Turn ? setBlock3(1) : setBlock3(2);
+    }
+
+    if (index === 3) {
+      player1Turn ? setBlock4(1) : setBlock4(2);
+    }
+
+    if (index === 4) {
+      player1Turn ? setBlock5(1) : setBlock5(2);
+    }
+    
+    if (index === 5) {
+      player1Turn ? setBlock6(1) : setBlock6(2);
+    }
+
+    if (index === 6) {
+      player1Turn ? setBlock7(1) : setBlock7(2);
+    }
+
+    if (index === 7) {
+      player1Turn ? setBlock8(1) : setBlock8(2);
+    }
+    
+    if (index === 8) {
+      player1Turn ? setBlock9(1) : setBlock9(2);
+    }
 
     setPlayer1Turn(!player1Turn);
   };
@@ -118,62 +143,35 @@ function GameScreen({ navigation, route} : any){
       {/* Board layout: 3 rows of 3 cells */}
       <View>
         <View style={styles.row}>
-          <TouchableHighlight 
-	        style={styles.cell} 
-            onPress={() => handlePress(block1, setBlock1)}
-          >
+          <TouchableHighlight style={styles.cell} onPress={() => handlePress(0)}>
             <Text style={styles.cellText}>{contentFor(block1)}</Text>
           </TouchableHighlight>
-          <TouchableHighlight 
-	        style={styles.cell} 
-            onPress={() => handlePress(block2, setBlock2)}
-       	  >
+          <TouchableHighlight style={styles.cell} onPress={() => handlePress(1)}>
             <Text style={styles.cellText}>{contentFor(block2)}</Text>
           </TouchableHighlight>
-          <TouchableHighlight 
-	        style={styles.cell} 
-            onPress={() => handlePress(block3, setBlock3)}
-          >
+          <TouchableHighlight style={styles.cell} onPress={() => handlePress(2)}>
             <Text style={styles.cellText}>{contentFor(block3)}</Text>
           </TouchableHighlight>
         </View>
         <View style={styles.row}>
-          <TouchableHighlight 
-	        style={styles.cell} 
-            onPress={() => handlePress(block4, setBlock4)}
-          >
+          <TouchableHighlight style={styles.cell} onPress={() => handlePress(3)}>
             <Text style={styles.cellText}>{contentFor(block4)}</Text>
           </TouchableHighlight>
-          <TouchableHighlight 
-	        style={styles.cell} 
-            onPress={() => handlePress(block5, setBlock5)}
-          >
+          <TouchableHighlight style={styles.cell} onPress={() => handlePress(4)}>
             <Text style={styles.cellText}>{contentFor(block5)}</Text>
           </TouchableHighlight>
-          <TouchableHighlight 
-	        style={styles.cell} 
-            onPress={() => handlePress(block6, setBlock6)}
-          >
+          <TouchableHighlight style={styles.cell} onPress={() => handlePress(5)}>
             <Text style={styles.cellText}>{contentFor(block6)}</Text>
           </TouchableHighlight>
         </View>
         <View style={styles.row}>
-          <TouchableHighlight 
-	        style={styles.cell} 
-	        onPress={() => handlePress(block7, setBlock7)}
-          >
+          <TouchableHighlight style={styles.cell} onPress={() => handlePress(6)}>
             <Text style={styles.cellText}>{contentFor(block7)}</Text>
           </TouchableHighlight>
-          <TouchableHighlight 
-	        style={styles.cell} 
-            onPress={() => handlePress(block8, setBlock8)}
-          >
+          <TouchableHighlight style={styles.cell} onPress={() => handlePress(7)}>
             <Text style={styles.cellText}>{contentFor(block8)}</Text>
           </TouchableHighlight>
-          <TouchableHighlight 
-            style={styles.cell} 
-            onPress={() => handlePress(block9, setBlock9)}
-          >
+          <TouchableHighlight style={styles.cell} onPress={() => handlePress(8)}>
             <Text style={styles.cellText}>{contentFor(block9)}</Text>
           </TouchableHighlight>
         </View>
